@@ -1,1 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia Visual de Redes Industriais</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="cookies">
+    🍪 Este site utiliza cookies para melhorar sua experiência.
+    <button onclick="aceitarCookies()">Aceitar</button>
+</div>
+
+<header>
+    <h1 id="titulo">Guia Visual de Redes Industriais</h1>
+    <p>Catálogo Interativo de Cabos e Topologias</p>
+</header>
+
+<nav>
+    <button onclick="mostrarAba('cabos')">Cabos Industriais</button>
+    <button onclick="mostrarAba('topologias')">Topologias</button>
+    <button onclick="modo()">🌙 Modo</button>
+
+    <select onchange="idioma(this.value)">
+        <option value="pt">Português</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+    </select>
+</nav>
+
+<section id="cabos" class="ativo">
+
+<h2>Meios Físicos de Comunicação</h2>
+
+<div class="cards">
+
+<div class="card" onclick="cabo('par')">
+<img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600">
+<h3>Par Trançado</h3>
+</div>
+
+<div class="card" onclick="cabo('fibra')">
+<img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600">
+<h3>Fibra Óptica</h3>
+</div>
+
+<div class="card" onclick="cabo('wifi')">
+<img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=600">
+<h3>Wireless</h3>
+</div>
+
+</div>
+
+<div id="resultado" class="info">
+Clique em um cabo para visualizar suas informações.
+</div>
+
+</section>
+
+<section id="topologias">
+
+<h2>Topologias de Rede</h2>
+
+<div class="topoBtns">
+<button onclick="topologia('estrela')">⭐ Estrela</button>
+<button onclick="topologia('barramento')">🚌 Barramento</button>
+</div>
+
+<div id="topologia" class="info">
+Selecione uma topologia.
+</div>
+
+</section>
+
+<footer>
+<div class="footer-container">
+
+<div>
+<h3>Site desenvolvido no SENAI CETEMP</h3>
+<p>Curso de Automação Industrial</p>
+</div>
+
+<div>
+<h3>Contato</h3>
+<p>📧 isabellihoffmann@gmail.com</p>
+<p>📱 (51) 91234-5678</p>
+<p>🏭 Catálogos Industriais</p>
+</div>
+
+</div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+}
+
+header{
+text-align:center;
+padding:30px;
+background:#0ea5e9;
+}
+
+nav{
+display:flex;
+justify-content:center;
+gap:10px;
+padding:15px;
+background:#1e293b;
+flex-wrap:wrap;
+}
+
+nav button,
+nav select{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+section{
+display:none;
+padding:30px;
+}
+
+.ativo{
+display:block;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-top:20px;
+}
+
+.card{
+background:#1e293b;
+border-radius:10px;
+overflow:hidden;
+cursor:pointer;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
+
+.card h3{
+padding:15px;
+text-align:center;
+}
+
+.info{
+margin-top:25px;
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+line-height:1.8;
+}
+
+.topoBtns{
+margin-top:20px;
+display:flex;
+gap:15px;
+}
+
+.topoBtns button{
+padding:12px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+footer{
+background:#111827;
+padding:40px;
+margin-top:50px;
+}
+
+.footer-container{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:20px;
+}
+
+footer h3{
+color:#38bdf8;
+margin-bottom:10px;
+}
+
+#cookies{
+position:fixed;
+bottom:15px;
+left:15px;
+right:15px;
+background:#1e293b;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-radius:10px;
+z-index:999;
+}
+
+#cookies button{
+padding:8px 15px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.light{
+background:#f5f5f5;
+color:#222;
+}
+
+.light .card,
+.light .info,
+.light nav,
+.light #cookies{
+background:white;
+color:#222;
+}
+
+.light footer{
+background:#0ea5e9;
+}
+
+function mostrarAba(id){
+
+document.getElementById("cabos").classList.remove("ativo");
+document.getElementById("topologias").classList.remove("ativo");
+
+document.getElementById(id).classList.add("ativo");
+
+}
+
+function cabo(tipo){
+
+let texto="";
+
+if(tipo==="par"){
+texto=`
+<h2>Par Trançado</h2>
+<p><b>Categoria:</b> CAT5e / CAT6</p>
+<p><b>Velocidade:</b> até 10 Gbps</p>
+<p><b>Distância:</b> 100 metros</p>
+<p><b>Aplicações:</b> CLPs, IHMs, Switches e Computadores.</p>
+`;
+}
+
+if(tipo==="fibra"){
+texto=`
+<h2>Fibra Óptica</h2>
+<p><b>Tipo:</b> Monomodo e Multimodo</p>
+<p><b>Velocidade:</b> até 100 Gbps</p>
+<p><b>Alcance:</b> mais de 40 km</p>
+<p><b>Vantagem:</b> Imune à interferência eletromagnética.</p>
+`;
+}
+
+if(tipo==="wifi"){
+texto=`
+<h2>Wireless</h2>
+<p><b>Tecnologias:</b> Wi-Fi, Bluetooth e LoRa</p>
+<p><b>Aplicações:</b> AGVs, IoT e sensores móveis.</p>
+<p><b>Frequências:</b> 2.4 GHz e 5 GHz.</p>
+`;
+}
+
+document.getElementById("resultado").innerHTML=texto;
+
+}
+
+function topologia(tipo){
+
+let texto="";
+
+if(tipo==="estrela"){
+texto=`
+<h2>⭐ Rede em Estrela</h2>
+<p>Todas as máquinas ligadas a um Switch.</p>
+<p><b>Vantagens:</b> Fácil manutenção, alta confiabilidade.</p>
+<p><b>Desvantagens:</b> Dependência do equipamento central.</p>
+`;
+}
+
+if(tipo==="barramento"){
+texto=`
+<h2>🚌 Rede em Barramento</h2>
+<p>Todas as máquinas compartilham o mesmo cabo.</p>
+<p><b>Vantagens:</b> Baixo custo.</p>
+<p><b>Desvantagens:</b> Falha no cabo afeta vários dispositivos.</p>
+`;
+}
+
+document.getElementById("topologia").innerHTML=texto;
+
+}
+
+function aceitarCookies(){
+document.getElementById("cookies").style.display="none";
+}
+
+function modo(){
+document.body.classList.toggle("light");
+}
+
+function idioma(lang){
+
+const titulo=document.getElementById("titulo");
+
+if(lang==="pt"){
+titulo.innerHTML="Guia Visual de Redes Industriais";
+}
+
+if(lang==="en"){
+titulo.innerHTML="Industrial Network Guide";
+}
+
+if(lang==="es"){
+titulo.innerHTML="Guía Visual de Redes Industriales";
+}
+
+}
+
 
